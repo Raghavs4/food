@@ -98,7 +98,7 @@ const Add = ({url}) => {
                 </div>
 
             </div>
-            <button type='submit' className='add-btn'>Add</button>
+            <button type='submit' onClick={onSubmitHandler} className='add-btn'>Add</button>
         </form>
     </div>
   )
