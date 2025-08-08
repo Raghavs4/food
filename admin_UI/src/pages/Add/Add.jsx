@@ -22,30 +22,43 @@ const Add = ({url}) => {
         console.log(data)
     }
 
-    const onSubmitHandler = async (event) =>{
-        event.preventDefault();
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
         const formData = new FormData();
-        formData.append("name",data.name)
-        formData.append("description",data.description)
-        formData.append("price",Number(data.price))
-        formData.append("category",data.category)
-        formData.append("image",image)
-    
-        const response = await axios.post(`${url}/api/food/add`, formData)
-        if(response.data.success){
+        formData.append("name", data.name);
+        formData.append("description", data.description);
+        formData.append("price", Number(data.price));
+        formData.append("category", data.category);
+        formData.append("image", image);
+
+        console.log("Sending request to:", `${url}/api/food/add`);
+        
+        const response = await axios.post(`${url}/api/food/add`, formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        console.log("Response:", response.data);
+
+        if (response.data.success) {
             setData({
-                name:"",
-                description:"",
-                price:"",
-                category:"Salad"
-            })
-            setImage(false)
-            toast.success(response.data.message,{position:'top-right'})
+                name: "",
+                description: "",
+                price: "",
+                category: "Salad"
+            });
+            setImage(false);
+            toast.success(response.data.message, { position: "top-right" });
+        } else {
+            toast.error(response.data.message || "Something went wrong");
         }
-        else{
-            toast.error(response.data.message)
-        }
+    } catch (error) {
+        console.error("Error adding product:", error);
+        toast.error("Failed to add product. Please check console for details.");
     }
+};
+
 
   return (
     <div className='add'>
