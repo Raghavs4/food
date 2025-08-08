@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast';
 
 const App = () => {
 
-  const url = "http://localhost:3000"
+  const url = "https://food-del-backend-sshb.onrender.com"
 
   return (
     <div>
